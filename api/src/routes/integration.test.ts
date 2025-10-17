@@ -2,11 +2,11 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import request from 'supertest';
 import express from 'express';
 import branchRouter, { resetBranches } from './branch';
-import orderRouter from './order';
-import orderDetailRouter from './orderDetail';
-import productRouter from './product';
-import deliveryRouter from './delivery';
-import orderDetailDeliveryRouter from './orderDetailDelivery';
+import orderRouter, { resetOrders } from './order';
+import orderDetailRouter, { resetOrderDetails } from './orderDetail';
+import productRouter, { resetProducts } from './product';
+import deliveryRouter, { resetDeliveries } from './delivery';
+import orderDetailDeliveryRouter, { resetOrderDetailDeliveries } from './orderDetailDelivery';
 import { branches as seedBranches } from '../seedData';
 import { orders as seedOrders } from '../seedData';
 import { products as seedProducts } from '../seedData';
@@ -23,7 +23,13 @@ describe('Integration Tests - Key Workflows', () => {
         app.use('/products', productRouter);
         app.use('/deliveries', deliveryRouter);
         app.use('/order-detail-deliveries', orderDetailDeliveryRouter);
+        // Reset all data to seed state for test isolation
         resetBranches();
+        resetOrders();
+        resetOrderDetails();
+        resetProducts();
+        resetDeliveries();
+        resetOrderDetailDeliveries();
     });
 
     describe('Complete Order Workflow', () => {
