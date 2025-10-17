@@ -88,6 +88,8 @@ To showcase extended capabilities:
 ## 📚 Documentation
 
 - [Detailed Architecture](./docs/architecture.md)
+- [Build and Testing Guide](./docs/build.md)
+- [Testing Framework Documentation](./docs/testing-framework.md)
 - [Complete Demo Script](./docs/demo-script.md)
 
 ## 🎓 Pro Tips for Solution Engineers
