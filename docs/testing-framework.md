@@ -10,6 +10,8 @@ This document describes the testing framework chosen for the OctoCAT Supply Chai
 
 Vitest is a blazing-fast unit test framework powered by Vite. It provides a modern, Jest-compatible API with native ES modules support, TypeScript integration, and excellent performance characteristics.
 
+**Current Version**: The project uses Vitest 3.0.5 in the API and 3.1.1 in the frontend. These minor version differences are compatible and both provide the same core functionality.
+
 ### Why Vitest?
 
 We selected Vitest as our testing framework for the following reasons:
@@ -76,7 +78,9 @@ export default defineConfig({
 
 ### Frontend Testing (React)
 
-**Configuration**: Frontend uses the same Vite config that can be extended for Vitest
+**Status**: The frontend has Vitest and testing libraries installed but no tests have been written yet.
+
+**Configuration**: Frontend can use Vitest with a configuration similar to the API setup. A `vitest.config.ts` file would need to be created in the frontend directory, or the existing `vite.config.ts` can be extended.
 
 **Dependencies**:
 - `vitest`: 3.1.1
@@ -85,19 +89,25 @@ export default defineConfig({
 - `@testing-library/user-event`: 14.6.1 (for user interaction simulation)
 - `jsdom`: 26.0.0 (for browser environment)
 
+**Note**: A test script needs to be added to `frontend/package.json` to run tests:
+```json
+"scripts": {
+  "test": "vitest"
+}
+```
+
 ## Running Tests
 
 ### Run All Tests
 ```bash
-# Run tests across all workspaces (API and Frontend)
+# Run tests across all workspaces that have tests configured
 npm run test
 
-# Run API tests only
+# Run API tests only (recommended - frontend tests not yet configured)
 npm run test:api
-
-# Run Frontend tests only
-npm run test:frontend
 ```
+
+**Note**: Currently, only the API workspace has tests configured. The frontend workspace has testing dependencies installed but no test script or tests yet.
 
 ### Run Tests with Coverage
 ```bash
@@ -108,7 +118,10 @@ npm run test:coverage --workspace=api
 ### Watch Mode
 ```bash
 # Run API tests in watch mode
-cd api && npm run test
+cd api && npx vitest
+
+# Or use the test command with watch flag
+cd api && npm run test -- --watch
 ```
 
 ## Writing Tests
