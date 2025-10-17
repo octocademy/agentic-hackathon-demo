@@ -83,6 +83,8 @@ This will start both the API and Frontend in development mode with the integrate
 
 ## Testing the Application
 
+For detailed information about the testing framework, best practices, and examples, see the [Testing Framework Documentation](./testing-framework.md).
+
 ### Running Tests
 
 ```bash

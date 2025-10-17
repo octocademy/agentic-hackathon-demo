@@ -12,11 +12,13 @@ The system is a modern supply chain management application built using TypeScrip
 - Express.js API with RESTful endpoints for all entities
 - Swagger/OpenAPI documentation integration
 - Entity models with proper relationships following an ERD diagram
+- Vitest for unit and integration testing
 
 ### Frontend Architecture
 - React 18+ with TypeScript
 - Vite build tool for fast development
 - Tailwind CSS for UI styling
+- Vitest with Testing Library for component testing
 
 ### DevOps Integration
 - Docker/Docker Compose for containerization
