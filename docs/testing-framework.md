@@ -78,7 +78,7 @@ export default defineConfig({
 
 ### Frontend Testing (React)
 
-**Status**: The frontend has Vitest and testing libraries installed but no tests have been written yet.
+**Status**: The frontend has all necessary Vitest and testing libraries installed, but no test script is configured in `frontend/package.json` and no tests have been written yet.
 
 **Configuration**: Frontend can use Vitest with a configuration similar to the API setup. A `vitest.config.ts` file would need to be created in the frontend directory, or the existing `vite.config.ts` can be extended.
 
@@ -89,7 +89,7 @@ export default defineConfig({
 - `@testing-library/user-event`: 14.6.1 (for user interaction simulation)
 - `jsdom`: 26.0.0 (for browser environment)
 
-**Note**: A test script needs to be added to `frontend/package.json` to run tests:
+**To enable frontend testing**, add this to `frontend/package.json`:
 ```json
 "scripts": {
   "test": "vitest"
@@ -103,11 +103,11 @@ export default defineConfig({
 # Run tests across all workspaces that have tests configured
 npm run test
 
-# Run API tests only (recommended - frontend tests not yet configured)
+# Run API tests (recommended)
 npm run test:api
 ```
 
-**Note**: Currently, only the API workspace has tests configured. The frontend workspace has testing dependencies installed but no test script or tests yet.
+**Note**: The root `package.json` includes a `test:frontend` script, but it will fail because the frontend workspace doesn't have a `test` script defined in `frontend/package.json` yet. Currently, only the API workspace has a working test configuration.
 
 ### Run Tests with Coverage
 ```bash
