@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { api, Product } from '../../../api/config';
 import { useTheme } from '../../../context/ThemeContext';
 import { useCart } from '../../../context/CartContext';
+import Toast from '../../Toast';
 
 const fetchProducts = async (): Promise<Product[]> => {
   const { data } = await axios.get(`${api.baseURL}${api.endpoints.products}`);
@@ -15,6 +16,7 @@ export default function Products() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const { data: products, isLoading, error } = useQuery('products', fetchProducts);
   const { darkMode } = useTheme();
   const { addToCart } = useCart();
@@ -35,8 +37,7 @@ export default function Products() {
     const quantity = quantities[product.productId] || 0;
     if (quantity > 0) {
       addToCart(product, quantity);
-      // Show success message (we'll add toast later)
-      alert(`Added ${quantity} ${product.name} to cart`);
+      setToast({ message: `Added ${quantity} ${product.name} to cart`, type: 'success' });
       setQuantities(prev => ({
         ...prev,
         [product.productId]: 0
@@ -213,6 +214,15 @@ export default function Products() {
             </p>
           </div>
         </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
       )}
     </div>
   );

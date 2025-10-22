@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useTheme } from '../context/ThemeContext';
+import Toast from './Toast';
 
 export default function Cart() {
   const { cart, updateQuantity, removeFromCart, clearCart, applyCoupon } = useCart();
   const { darkMode } = useTheme();
   const [couponCode, setCouponCode] = useState('');
   const [couponMessage, setCouponMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   const handleQuantityChange = (productId: number, newQuantity: number) => {
     if (newQuantity >= 0) {
@@ -35,7 +37,13 @@ export default function Cart() {
   const handleClearCart = () => {
     if (window.confirm('Are you sure you want to clear your cart?')) {
       clearCart();
+      setToast({ message: 'Cart cleared successfully', type: 'success' });
     }
+  };
+
+  const handleRemoveItem = (productId: number, productName: string) => {
+    removeFromCart(productId);
+    setToast({ message: `Removed ${productName} from cart`, type: 'success' });
   };
 
   if (cart.items.length === 0) {
@@ -167,7 +175,7 @@ export default function Cart() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           <button
-                            onClick={() => removeFromCart(item.product.productId)}
+                            onClick={() => handleRemoveItem(item.product.productId, item.product.name)}
                             className="text-red-600 hover:text-red-800 transition-colors"
                             aria-label={`Remove ${item.product.name} from cart`}
                           >
@@ -200,7 +208,7 @@ export default function Cart() {
                             {item.product.name}
                           </h3>
                           <button
-                            onClick={() => removeFromCart(item.product.productId)}
+                            onClick={() => handleRemoveItem(item.product.productId, item.product.name)}
                             className="ml-2 text-red-600 hover:text-red-800"
                           >
                             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -329,6 +337,15 @@ export default function Cart() {
             </div>
           </div>
         </div>
+
+        {/* Toast Notification */}
+        {toast && (
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast(null)}
+          />
+        )}
       </div>
     </div>
   );
