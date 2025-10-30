@@ -11,5 +11,18 @@ export default defineConfig({
   },
   define: {
     'process.env.CODESPACE_NAME': JSON.stringify(process.env.CODESPACE_NAME),
-  }
+  },
+  // @ts-ignore - test config is for vitest
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './tests/setup.ts',
+    css: true,
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/e2e/**',
+      '**/.{idea,git,cache,output,temp}/**',
+    ],
+  },
 })
